@@ -10,3 +10,6 @@ sqlparse==0.4.2
 style==1.1.0
 update==0.0.1
 whitenoise==6.0.0
+
+
+
