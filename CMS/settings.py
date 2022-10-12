@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'CMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'insurancedemo',
+        'NAME': 'insu_comm',
         'USER': 'postgres',
-        'PASSWORD': 'test',
+        'PASSWORD': 'Postgre@123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -131,10 +131,18 @@ login_redirect_url = "/admin/"
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR,'media'),
+
 ]
 STATIC_ROOT  = os.path.join(BASE_DIR, 'staticroot')
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediaroot')
+
+TEMP = os.path.join(BASE_DIR, 'mediaroot/temp')
+
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
@@ -145,3 +153,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+BASE_URL = '127.0.0.1:8000'
