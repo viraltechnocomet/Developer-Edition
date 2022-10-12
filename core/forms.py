@@ -47,8 +47,7 @@ class CreateUserCustomForm(ModelForm):
                 }
             ),
         }
-<<<<<<< HEAD
-        
+               
 class AddManagerForm(ModelForm):
     class Meta:
         model = User
@@ -107,9 +106,9 @@ class AddManagerForm(ModelForm):
                 }
             ),
         }
-=======
+
 
 # class ManagerForm(ModelForm):
 #     class Meta:
         
->>>>>>> origin/ankit-dev
+
