@@ -47,3 +47,62 @@ class CreateUserCustomForm(ModelForm):
                 }
             ),
         }
+        
+class AddManagerForm(ModelForm):
+    class Meta:
+        model = User
+
+        fields = "__all__"
+
+        widgets = {
+            'type':forms.HiddenInput(),
+            
+            'first_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"First Name",
+                    'type':"text",
+                }
+            ),
+            'last_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Last Name",
+                    'type':"text",
+                }
+            ),
+            'username':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"User Name",
+                    'type':"text",
+                }
+            ),
+            'email':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"E-Mail",
+                    'type':"text",
+                }
+            ),
+            'password1':forms.PasswordInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Password",
+                    'type':"text",
+                }
+            ),
+            'password2':forms.PasswordInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Confirm Password",
+                    'type':"text",
+                }
+            ),
+        }
