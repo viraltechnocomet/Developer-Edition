@@ -47,3 +47,7 @@ class CreateUserCustomForm(ModelForm):
                 }
             ),
         }
+
+# class ManagerForm(ModelForm):
+#     class Meta:
+        
