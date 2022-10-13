@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'CMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'insu_comm',
+        'NAME': 'insurancedemo',
         'USER': 'postgres',
         'PASSWORD': 'jeel@1810',
         'HOST': 'localhost',

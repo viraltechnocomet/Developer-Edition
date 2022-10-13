@@ -10,4 +10,5 @@ urlpatterns = [
     # path('', RedirectView.as_view(url=reverse_lazy('accounts:login'))),
     # path('', views.DashboardView.as_view(), name='index'),
     path('dashboard/', views.DashboardView.as_view(),name='dashboard'),
+    path('add-manager/', views.AddmanagerView,name='add-manager'),
 ]

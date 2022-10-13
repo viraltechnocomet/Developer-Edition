@@ -15,6 +15,8 @@ from django.shortcuts import (
     render
 )
 
+from core.forms import CreateUserCustomForm,Addmanagerform
+
 class DashboardView(View):
     template_name = './core/dashboard.html'
 
@@ -24,3 +26,9 @@ class DashboardView(View):
 
     def post(self, request, *args, **kwargs):
         ...
+
+
+def AddmanagerView(request):
+    context={}
+    context['form']=Addmanagerform()
+    return render(request,'core/add-manager.html',context)

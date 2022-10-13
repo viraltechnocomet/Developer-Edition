@@ -18,7 +18,7 @@ class CreateUserCustomForm(ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"User Name",
+                    'placeholder':"UserName",
                     'type':"text",
                 }
             ),
@@ -48,6 +48,49 @@ class CreateUserCustomForm(ModelForm):
             ),
         }
 
-# class ManagerForm(ModelForm):
-#     class Meta:
-        
+
+
+class Addmanagerform(ModelForm):
+    class Meta:
+        model = User
+
+        fields = "__all__"
+
+        widgets = {
+            'type':forms.HiddenInput(),
+            'username':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"UserName",
+                    'type':"text",
+                }
+            ),
+            'email':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"E-Mail",
+                    'type':"text",
+                }
+            ),
+            'password1':forms.PasswordInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Password",
+                    'type':"text",
+                }
+            ),
+            'password2':forms.PasswordInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Confirm Password",
+                    'type':"text",
+                }
+            ),
+        }
+
+
+
