@@ -11,12 +11,14 @@ USER_TYPES=[
 ]
 class CustomUser(AbstractUser):
     username = None
+    
     type = models.CharField(max_length=10,choices=USER_TYPES,null=True,blank=True)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
+    profile_pic=models.ImageField(upload_to='profile_pic')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -42,3 +44,5 @@ class CustomUser(AbstractUser):
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         return True
+
+    
