@@ -18,7 +18,7 @@ class CreateUserCustomForm(ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"User Name",
+                    'placeholder':"UserName",
                     'type':"text",
                 }
             ),
@@ -81,7 +81,7 @@ class AddManagerForm(ModelForm):
                     'type':"text",
                 }
             ),
-            'email':forms.TextInput(
+            'email':forms.EmailInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -89,7 +89,7 @@ class AddManagerForm(ModelForm):
                     'type':"text",
                 }
             ),
-            'password1':forms.PasswordInput(
+            'password':forms.PasswordInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -97,18 +97,12 @@ class AddManagerForm(ModelForm):
                     'type':"text",
                 }
             ),
-            'password2':forms.PasswordInput(
-                attrs={
-                    'required' : True,
-                    'class':'form-control',
-                    'placeholder':"Confirm Password",
-                    'type':"text",
-                }
-            ),
+            
         }
 
 
 # class ManagerForm(ModelForm):
 #     class Meta:
         
+
 
