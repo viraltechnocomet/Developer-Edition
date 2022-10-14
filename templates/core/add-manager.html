@@ -4,6 +4,36 @@ Add-Manager
 {% endblock title %}
 
 {% block content %}
+{% block extra-stylesheets %} 
+<style type="text/css">
+	.image-container{
+		max-width: 250px;
+		height: auto;
+		position: relative;
+	}
+	.field-heading{
+		color: #737373;
+	}
+	#id_confirm{
+		color: #33ff33;
+	}
+	#id_confirm:hover {
+		opacity: 0.5;
+	}
+	#id_cancel:hover {
+		opacity: 0.5;
+	}
+	#id_cancel{
+		color: red;
+	}
+	.material-icons{
+		font-size: 30px;
+	}
+	.material-icons:hover{
+		cursor: pointer;
+	}
+</style>
+{% endblock extra-stylesheets %} 
 
 <body class="">
     <main class="main-content  mt-0">
@@ -73,7 +103,10 @@ Add-Manager
                                                           </div>
                                                         </div>
                                                     </div>
-                                    
+													<div class="mb-2" id="id_image_crop_confirm">
+														<span id="id_cancel" class="material-icons">cancel</span>
+														<span id="id_confirm" class="material-icons">check</span>
+													</div>
                                                     <div class="image-container" id="id_image_container">
                                                           <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" alt="codingwithmitch logo" >
                                                             <div class="middle" id="id_middle_container">
@@ -252,7 +285,7 @@ Add-Manager
 	/ return null if invalid or base64String if valid /
 	function isImageSizeValid(image){
 		console.log("max size: {{DATA_UPLOAD_MAX_MEMORY_SIZE}}")
-		// console.log(image)
+		console.log(image)
 		var startIndex = image.indexOf("base64,") + 7;
 		var base64str = image.substr(startIndex);
 		var decoded = atob(base64str);
