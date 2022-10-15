@@ -76,7 +76,14 @@ class AddManagerForm(ModelForm):
                     'type':"text",
                 }
             ),
-           
+           'username':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"username",
+                    'type':"text",
+                }
+            ),
             'email':forms.EmailInput(
                 attrs={
                     'required' : True,
