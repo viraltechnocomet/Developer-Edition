@@ -100,6 +100,17 @@ class AddManagerForm(ModelForm):
             
         }
 
+        def save(self, commit=True):
+            User = super(AddManagerForm, self).save(commit=False)
+            User.username = self.cleaned_data['username']
+            User.first_name = self.cleaned_data['first_name']
+            User.last_name = self.cleaned_data['last_name']
+            User.email = self.cleaned_data['email'].lower()
+            User.profile_image = self.cleaned_data['profile_image']
+            if commit:
+                User.save()
+            return User
+
 
 # class ManagerForm(ModelForm):
 #     class Meta:
