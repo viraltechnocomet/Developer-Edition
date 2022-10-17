@@ -18,7 +18,7 @@ class CreateUserCustomForm(ModelForm):
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"UserName",
+                    'placeholder':"User Name",
                     'type':"text",
                 }
             ),
@@ -47,10 +47,8 @@ class CreateUserCustomForm(ModelForm):
                 }
             ),
         }
-
-
-
-class Addmanagerform(ModelForm):
+               
+class AddManagerForm(ModelForm):
     class Meta:
         model = User
 
@@ -58,15 +56,32 @@ class Addmanagerform(ModelForm):
 
         widgets = {
             'type':forms.HiddenInput(),
+            
+            'first_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"First Name",
+                    'type':"text",
+                }
+            ),
+            'last_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Last Name",
+                    'type':"text",
+                }
+            ),
             'username':forms.TextInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
-                    'placeholder':"UserName",
-                    'type':"text",
+                    'placeholder':"User Name",
+                    'type':"text", 
                 }
             ),
-            'email':forms.TextInput(
+            'email':forms.EmailInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -74,7 +89,7 @@ class Addmanagerform(ModelForm):
                     'type':"text",
                 }
             ),
-            'password1':forms.PasswordInput(
+            'password':forms.PasswordInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -82,15 +97,10 @@ class Addmanagerform(ModelForm):
                     'type':"text",
                 }
             ),
-            'password2':forms.PasswordInput(
-                attrs={
-                    'required' : True,
-                    'class':'form-control',
-                    'placeholder':"Confirm Password",
-                    'type':"text",
-                }
-            ),
+            
         }
 
 
-
+# class ManagerForm(ModelForm):
+#     class Meta:
+        

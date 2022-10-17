@@ -10,13 +10,14 @@ USER_TYPES=[
     ('AGENT', 'agent')
 ]
 class CustomUser(AbstractUser):
-    username = None
+    username = models.CharField(max_length=20)
     type = models.CharField(max_length=10,choices=USER_TYPES,null=True,blank=True)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
+    profile_pic=models.ImageField(upload_to='profile_pic')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
