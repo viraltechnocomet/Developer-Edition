@@ -103,17 +103,18 @@ Add-Manager
                                                           </div>
                                                         </div>
                                                     </div>
-													<div class="mb-2" id="id_image_crop_confirm">
+													<!-- <div class="mb-2" id="id_image_crop_confirm">
 														<span id="id_cancel" class="material-icons">cancel</span>
 														<span id="id_confirm" class="material-icons">check</span>
-													</div>
+													</div> -->
+													
                                                     <div class="image-container" id="id_image_container">
-                                                          <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" alt="codingwithmitch logo" >
-                                                            <div class="middle" id="id_middle_container">
-                                                                <div class="material-icons" id="id_text">add_circle</div>
-                                                                
-                                                            </div>
-                                                      </div>
+                                                        <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{request.user.profile_pic.url}}" alt="Profile" >
+                                                        <div class="middle" id="id_middle_container">
+                                                            <div class="material-icons" id="id_text">add_circle</div>
+														
+                                                        </div>
+                                                    </div>
                                                     
                                                 </div>
                                     
@@ -182,8 +183,8 @@ Add-Manager
 		var text = document.getElementById("id_text")
 		//text.style.backgroundColor = "#0066ff"
 		text.style.color = "#0066ff"
-		text.style.fontSize = "50px"
-		text.style.padding = "16px 32px"
+		text.style.fontSize = "0px"
+		//text.style.padding = "16px 32px"
 		text.style.cursor = "pointer"
 
 		var profileImage = document.getElementById("id_profile_image")
@@ -245,7 +246,7 @@ Add-Manager
 
 		profileImage.style.opacity = "1"
 		middleContainer.style.opacity = "0"
-		text.style.cursor = "default"
+		text.style.cursor = "move"
 		text.style.opacity = "0"
 
 		document.getElementById('id_image_container').removeEventListener("click", function(event){
@@ -285,14 +286,15 @@ Add-Manager
 	/ return null if invalid or base64String if valid /
 	function isImageSizeValid(image){
 		console.log("max size: {{DATA_UPLOAD_MAX_MEMORY_SIZE}}")
-		console.log(image)
 		var startIndex = image.indexOf("base64,") + 7;
 		var base64str = image.substr(startIndex);
 		var decoded = atob(base64str);
 		console.log("FileSize: " + decoded.length);
+		/*
 		if(decoded.length>= "{{DATA_UPLOAD_MAX_MEMORY_SIZE}}"){
+			console.log("image size exceed")
 			return null
-		}
+		} */
 		return base64str
 	}
 
@@ -312,7 +314,7 @@ Add-Manager
 			$.ajax({
 				type: 'POST',
 				dataType: "json",
-				url: "{% url 'core:add-manager'%}",
+				url: "{% url 'core:cropimage'%}",
 				data: requestData,
 				timeout: 10000,
 				success: function(data) {
@@ -347,6 +349,7 @@ Add-Manager
 
             reader.onload = function (e) {
             	disableImageOverlay()
+				console.log("readURL")
             	var image = e.target.result
             	var imageField = document.getElementById('id_profile_image_display')
                 imageField.src = image
