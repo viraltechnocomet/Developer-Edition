@@ -91,6 +91,7 @@ def save_temp_profile_image_from_base64String(imageString, user):
 		if not os.path.exists(os.path.join(settings.TEMP, str(user.pk))):
 			os.mkdir(os.path.join(settings.TEMP, str(user.pk)))
 		url = os.path.join(settings.TEMP,str(user.pk),TEMP_PROFILE_IMAGE_NAME)
+		print(url)
 		storage = FileSystemStorage(location=url)
 		
 		image = base64.b64decode(imageString)

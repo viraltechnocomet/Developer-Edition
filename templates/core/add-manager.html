@@ -82,13 +82,15 @@ Add-Manager
                             <div class="card-body">
                                 <form role="form text-left" action="{% url 'core:add-manager' %}" method="post">
                                     {% csrf_token %}
-                                    <label>Profile Picture</label>
+                                    <!-- <label>Profile Picture</label> -->
                                     <!-- <div class="d-flex flex-column justify-content-center">
                                         <div class="image-container mx-auto mb-4">
                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="account-image rounded-circle m-auto d-block dropdown-toggle" style="cursor: pointer;" id="id_profile_links" data-bs-toggle="dropdown" aria-expanded="false" width="150" height="150">
                                         </div>
                                     </div> -->
-                                    <div class="container-fluid p-t-20">
+
+									<!-- for profile picture -->
+                                    <!-- <div class="container-fluid p-t-20">
                                         <div class="d-flex flex-row justify-content-center flex-wrap align-items-start">
                                             
                                             <div class="card profile-card">
@@ -103,10 +105,10 @@ Add-Manager
                                                           </div>
                                                         </div>
                                                     </div>
-													<!-- <div class="mb-2" id="id_image_crop_confirm">
+													<div class="mb-2" id="id_image_crop_confirm">
 														<span id="id_cancel" class="material-icons">cancel</span>
 														<span id="id_confirm" class="material-icons">check</span>
-													</div> -->
+													</div>
 													
                                                     <div class="image-container" id="id_image_container">
                                                         <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{request.user.profile_pic.url}}" alt="Profile" >
@@ -129,7 +131,7 @@ Add-Manager
                                               </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <label>First Name</label>
                                     <div class="mb-3">
