@@ -15,7 +15,7 @@ USER_TYPES=[
     ('AGENT', 'agent')
 ]
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=20)
+    username = models.CharField(max_length=20,null=True,blank=True)
     type = models.CharField(max_length=10,choices=USER_TYPES,null=True,blank=True)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
