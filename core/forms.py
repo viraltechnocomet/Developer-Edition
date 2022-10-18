@@ -56,6 +56,8 @@ class AddManagerForm(ModelForm):
 
         widgets = {
             'type':forms.HiddenInput(),
+
+            'image':forms.ImageField(),
             
             'first_name':forms.TextInput(
                 attrs={
