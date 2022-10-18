@@ -142,9 +142,9 @@ STATICFILES_DIRS = [
 
 ]
 STATIC_ROOT  = os.path.join(BASE_DIR, 'staticroot')
-MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediaroot')
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 
-TEMP = os.path.join(BASE_DIR, 'mediaroot/temp')
+TEMP = os.path.join(BASE_DIR, 'mediaroot','temp')
 
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

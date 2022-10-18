@@ -12,6 +12,10 @@ urlpatterns = [
     # path('', views.DashboardView.as_view(), name='index'),
     path('dashboard/', views.DashboardView.as_view(),name='dashboard'),
     path('add-manager/', views.AddManager,name='add-manager'),
+<<<<<<< HEAD
     path('cropimage/',crop_image,name='cropimage'),
+=======
+    path('cropimage/', crop_image,name='cropimage'),
+>>>>>>> origin/viral-dev
     
 ]

@@ -88,8 +88,53 @@ Add-Manager
                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="account-image rounded-circle m-auto d-block dropdown-toggle" style="cursor: pointer;" id="id_profile_links" data-bs-toggle="dropdown" aria-expanded="false" width="150" height="150">
                                         </div>
                                     </div> -->
+<<<<<<< HEAD
 									<div class="container-fluid p-t-20">
 										<div class="d-flex flex-row justify-content-center flex-wrap align-items-start">
+=======
+                                    <div class="container-fluid p-t-20">
+                                        <div class="d-flex flex-row justify-content-center flex-wrap align-items-start">
+                                            
+                                            <div class="card profile-card">
+                                              <div class="card-body flex-row">
+                                    
+                                                  <div class="d-flex flex-column justify-content-center p-4">
+                                                      
+                                                    <div class="container" id="id_loading_spinner" style="display: none">
+                                                        <div class="d-flex flex-row mx-auto flex-grow-1 justify-content-center">
+                                                          <div class="spinner-border text-primary" role="status">
+                                                            <span class="sr-only"></span>
+                                                          </div>
+                                                        </div>
+                                                    </div>
+													<!-- <div class="mb-2" id="id_image_crop_confirm">
+														<span id="id_cancel" class="material-icons">cancel</span>
+														<span id="id_confirm" class="material-icons">check</span>
+													</div> -->
+													
+                                                    <div class="image-container" id="id_image_container">
+                                                        <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{request.user.profile_pic.url}}" alt="Profile" >
+                                                        <div class="middle" id="id_middle_container">
+                                                            <div class="material-icons" id="id_text">add_circle</div>
+														
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                    
+                                                <div class="d-flex flex-column justify-content-center">
+                                                      
+                                                    <form class="form-signin" method="post" enctype="multipart/form-data">{% csrf_token %}
+                                                          <input class="d-none" type="file" name="profile_image" id="id_profile_image" onchange="readURL(this)">                                                        
+                                                    </form>
+                                    
+                                                  </div>
+                                    
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+>>>>>>> origin/viral-dev
 
 											<div class="card profile-card">
 												<div class="card-body flex-row">
@@ -192,8 +237,8 @@ Add-Manager
 		var text = document.getElementById("id_text")
 		//text.style.backgroundColor = "#0066ff"
 		text.style.color = "#0066ff"
-		text.style.fontSize = "50px"
-		text.style.padding = "16px 32px"
+		text.style.fontSize = "0px"
+		//text.style.padding = "16px 32px"
 		text.style.cursor = "pointer"
 
 		var profileImage = document.getElementById("id_profile_image")
@@ -255,7 +300,7 @@ Add-Manager
 
 		profileImage.style.opacity = "1"
 		middleContainer.style.opacity = "0"
-		text.style.cursor = "default"
+		text.style.cursor = "move"
 		text.style.opacity = "0"
 
 		document.getElementById('id_image_container').removeEventListener("click", function (event) {
@@ -295,14 +340,19 @@ Add-Manager
 	/ return null if invalid or base64String if valid /
 	function isImageSizeValid(image) {
 		console.log("max size: {{DATA_UPLOAD_MAX_MEMORY_SIZE}}")
-		console.log(image)
 		var startIndex = image.indexOf("base64,") + 7;
 		var base64str = image.substr(startIndex);
 		var decoded = atob(base64str);
 		console.log("FileSize: " + decoded.length);
+<<<<<<< HEAD
 		if (decoded.length >= "{{DATA_UPLOAD_MAX_MEMORY_SIZE}}") {
+=======
+		/*
+		if(decoded.length>= "{{DATA_UPLOAD_MAX_MEMORY_SIZE}}"){
+			console.log("image size exceed")
+>>>>>>> origin/viral-dev
 			return null
-		}
+		} */
 		return base64str
 	}
 
@@ -322,7 +372,7 @@ Add-Manager
 			$.ajax({
 				type: 'POST',
 				dataType: "json",
-				url: "{% url 'core:add-manager'%}",
+				url: "{% url 'core:cropimage'%}",
 				data: requestData,
 				timeout: 10000,
 				success: function (data) {
@@ -355,11 +405,20 @@ Add-Manager
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 
+<<<<<<< HEAD
 			reader.onload = function (e) {
 				disableImageOverlay()
 				var image = e.target.result
 				var imageField = document.getElementById('id_profile_image_display')
 				imageField.src = image
+=======
+            reader.onload = function (e) {
+            	disableImageOverlay()
+				console.log("readURL")
+            	var image = e.target.result
+            	var imageField = document.getElementById('id_profile_image_display')
+                imageField.src = image
+>>>>>>> origin/viral-dev
 				cropper = new Cropper(imageField, {
 					aspectRatio: 1 / 1,
 					crop(event) {
