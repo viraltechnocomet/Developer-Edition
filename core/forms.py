@@ -1,5 +1,8 @@
 from django import forms
 from django.forms import ModelForm
+
+from accounts.models import CustomUser
+
 from .models import *
 from django.contrib.auth import get_user_model
 from django.contrib.admin import widgets
@@ -73,7 +76,7 @@ class AddManagerForm(ModelForm):
                     'type':"text",
                 }
             ),
-            'username':forms.TextInput(
+           'username':forms.TextInput(
                 attrs={
                     'required' : True,
                     'class':'form-control',
@@ -100,7 +103,7 @@ class AddManagerForm(ModelForm):
             
         }
 
+# class AccountManagerForm(forms.ModelForm):
 
-# class ManagerForm(ModelForm):
 #     class Meta:
         

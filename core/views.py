@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -12,10 +13,14 @@ from django.http import (
     HttpResponseRedirect,
 )
 from django.shortcuts import (
-    render
+    render,redirect
 )
 
 from core.forms import CreateUserCustomForm, AddManagerForm
+from accounts.models import CustomUser
+from django.conf import settings
+from core.forms import AddManagerForm
+
 
 class DashboardView(View):
     template_name = './core/dashboard.html'

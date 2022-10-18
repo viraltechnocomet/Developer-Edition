@@ -1,4 +1,9 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin,AbstractUser
+from asyncio.windows_events import NULL
+from email.policy import default
+from enum import unique
+from statistics import mode
+from unittest.util import _MAX_LENGTH
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin,AbstractUser,BaseUserManager
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +22,7 @@ class CustomUser(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    profile_pic=models.ImageField(upload_to='profile_pic')
+    profile_pic=models.ImageField(max_length=225, upload_to='profile_pic', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -43,5 +48,6 @@ class CustomUser(AbstractUser):
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         return True
+
 
     

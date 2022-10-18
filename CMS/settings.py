@@ -125,6 +125,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760 
+# Max upload zise 10 Mb
+
 
 login_redirect_url = "/admin/"
 # Static files (CSS, JavaScript, Images)
