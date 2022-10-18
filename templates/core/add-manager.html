@@ -4,6 +4,36 @@ Add-Manager
 {% endblock title %}
 
 {% block content %}
+{% block extra-stylesheets %} 
+<style type="text/css">
+	.image-container{
+		max-width: 250px;
+		height: auto;
+		position: relative;
+	}
+	.field-heading{
+		color: #737373;
+	}
+	#id_confirm{
+		color: #33ff33;
+	}
+	#id_confirm:hover {
+		opacity: 0.5;
+	}
+	#id_cancel:hover {
+		opacity: 0.5;
+	}
+	#id_cancel{
+		color: red;
+	}
+	.material-icons{
+		font-size: 30px;
+	}
+	.material-icons:hover{
+		cursor: pointer;
+	}
+</style>
+{% endblock extra-stylesheets %} 
 
 <style type="text/css">
 	.image-container{
@@ -81,13 +111,15 @@ Add-Manager
                             <div class="card-body">
                                 <form role="form text-left" action="{% url 'core:add-manager' %}" method="post">
                                     {% csrf_token %}
-                                    <label>Profile Picture</label>
+                                    <!-- <label>Profile Picture</label> -->
                                     <!-- <div class="d-flex flex-column justify-content-center">
                                         <div class="image-container mx-auto mb-4">
                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="account-image rounded-circle m-auto d-block dropdown-toggle" style="cursor: pointer;" id="id_profile_links" data-bs-toggle="dropdown" aria-expanded="false" width="150" height="150">
                                         </div>
                                     </div> -->
-                                    <div class="container-fluid p-t-20">
+
+									<!-- for profile picture -->
+                                    <!-- <div class="container-fluid p-t-20">
                                         <div class="d-flex flex-row justify-content-center flex-wrap align-items-start">
                                             
                                             <div class="card profile-card">
@@ -102,11 +134,15 @@ Add-Manager
                                                           </div>
                                                         </div>
                                                     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/viral-dev
 													<div class="mb-2" id="id_image_crop_confirm">
 														<span id="id_cancel" class="material-icons">cancel</span>
 														<span id="id_confirm" class="material-icons">check</span>
 													</div>
+<<<<<<< HEAD
                                     
                                                     <div class="image-container" id="id_image_container">
                                                           <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{form.initial.profile_image.url}}" alt="codingwithmitch logo" >
@@ -115,6 +151,16 @@ Add-Manager
                                                                 
                                                             </div>
                                                       </div>
+=======
+													
+                                                    <div class="image-container" id="id_image_container">
+                                                        <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{request.user.profile_pic.url}}" alt="Profile" >
+                                                        <div class="middle" id="id_middle_container">
+                                                            <div class="material-icons" id="id_text">add_circle</div>
+														
+                                                        </div>
+                                                    </div>
+>>>>>>> origin/viral-dev
                                                     
                                                 </div>
                                     
@@ -129,7 +175,7 @@ Add-Manager
                                               </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <label>First Name</label>
                                     <div class="mb-3">
@@ -183,8 +229,8 @@ Add-Manager
 		var text = document.getElementById("id_text")
 		//text.style.backgroundColor = "#0066ff"
 		text.style.color = "#0066ff"
-		text.style.fontSize = "50px"
-		text.style.padding = "16px 32px"
+		text.style.fontSize = "0px"
+		//text.style.padding = "16px 32px"
 		text.style.cursor = "pointer"
 
 		var profileImage = document.getElementById("id_profile_image")
@@ -246,7 +292,7 @@ Add-Manager
 
 		profileImage.style.opacity = "1"
 		middleContainer.style.opacity = "0"
-		text.style.cursor = "default"
+		text.style.cursor = "move"
 		text.style.opacity = "0"
 
 		document.getElementById('id_image_container').removeEventListener("click", function(event){
@@ -286,14 +332,15 @@ Add-Manager
 	/ return null if invalid or base64String if valid /
 	function isImageSizeValid(image){
 		console.log("max size: {{DATA_UPLOAD_MAX_MEMORY_SIZE}}")
-		// console.log(image)
 		var startIndex = image.indexOf("base64,") + 7;
 		var base64str = image.substr(startIndex);
 		var decoded = atob(base64str);
 		console.log("FileSize: " + decoded.length);
+		/*
 		if(decoded.length>= "{{DATA_UPLOAD_MAX_MEMORY_SIZE}}"){
+			console.log("image size exceed")
 			return null
-		}
+		} */
 		return base64str
 	}
 
@@ -310,7 +357,37 @@ Add-Manager
 				"cropHeight": cropHeight
 			}
 			displayLoadingSpinner(true)
+<<<<<<< HEAD
 			
+=======
+			$.ajax({
+				type: 'POST',
+				dataType: "json",
+				url: "{% url 'core:cropimage'%}",
+				data: requestData,
+				timeout: 10000,
+				success: function(data) {
+					if(data.result == "success"){
+						document.getElementById("id_cancel").click()
+					}
+					else if(data.result == "error"){
+						alert(data.exception)
+						document.getElementById("id_cancel").click()
+					}
+				},
+				error: function(data) {
+					console.error("ERROR...", data)
+				},
+				complete: function(data){
+					displayLoadingSpinner(false)
+				}
+			});
+		}
+		else{
+			alert("Upload an image smaller than 10 MB");
+			document.getElementById("id_cancel").click()
+		}
+>>>>>>> origin/viral-dev
 	}
 
 	/*
@@ -322,6 +399,7 @@ Add-Manager
 
             reader.onload = function (e) {
             	disableImageOverlay()
+				console.log("readURL")
             	var image = e.target.result
             	var imageField = document.getElementById('id_profile_image_display')
                 imageField.src = image

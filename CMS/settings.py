@@ -125,6 +125,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760 
+# Max upload zise 10 Mb
+
 
 login_redirect_url = "/admin/"
 # Static files (CSS, JavaScript, Images)
@@ -139,9 +142,9 @@ STATICFILES_DIRS = [
 
 ]
 STATIC_ROOT  = os.path.join(BASE_DIR, 'staticroot')
-MEDIA_ROOT  = os.path.join(BASE_DIR, 'mediaroot')
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 
-TEMP = os.path.join(BASE_DIR, 'mediaroot/temp')
+TEMP = os.path.join(BASE_DIR, 'mediaroot','temp')
 
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
