@@ -47,8 +47,7 @@ def AddManager(request):
     context['form'] = AddManagerForm
     return render(request,'core/add-manager.html',context)
 
-<<<<<<< HEAD
-=======
+
 # def AddManager(request, args, *kwargs):
 # 	if not request.user.is_authenticated:
 # 		return redirect("login")
@@ -85,126 +84,120 @@ def AddManager(request):
 # 	context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
 # 	return render(request, "core/add-manager.html", context)
 
->>>>>>> origin/viral-dev
-def save_temp_profile_image_from_base64String(imageString, user):
-	INCORRECT_PADDING_EXCEPTION = "Incorrect padding"
-	try:
-		if not os.path.exists(settings.TEMP):
-			os.mkdir(settings.TEMP)
-<<<<<<< HEAD
-		if not os.path.exists(settings.TEMP + "/" + str(user.pk)):
-			os.mkdir(settings.TEMP + "/" + str(user.pk))
-		url = os.path.join(settings.TEMP + "/" + str(user.pk),TEMP_PROFILE_IMAGE_NAME)
-		storage = FileSystemStorage(location=url)
-		image = base64.b64decode(imageString)
-		with storage.open('', 'wb+') as destination:
-=======
-		if not os.path.exists(os.path.join(settings.TEMP, str(user.pk))):
-			os.mkdir(os.path.join(settings.TEMP, str(user.pk)))
-		url = os.path.join(settings.TEMP,str(user.pk),TEMP_PROFILE_IMAGE_NAME)
-		print(url)
-		storage = FileSystemStorage(location=url)
+# def save_temp_profile_image_from_base64String(imageString, user):
+# 	INCORRECT_PADDING_EXCEPTION = "Incorrect padding"
+# 	try:
+# 		if not os.path.exists(settings.TEMP):
+# 			os.mkdir(settings.TEMP)
+
+# 		if not os.path.exists(settings.TEMP + "/" + str(user.pk)):
+# 			os.mkdir(settings.TEMP + "/" + str(user.pk))
+# 		url = os.path.join(settings.TEMP + "/" + str(user.pk),TEMP_PROFILE_IMAGE_NAME)
+# 		storage = FileSystemStorage(location=url)
+# 		image = base64.b64decode(imageString)
+# 		with storage.open('', 'wb+') as destination:
+
+# 		if not os.path.exists(os.path.join(settings.TEMP, str(user.pk))):
+# 			os.mkdir(os.path.join(settings.TEMP, str(user.pk)))
+# 		url = os.path.join(settings.TEMP,str(user.pk),TEMP_PROFILE_IMAGE_NAME)
+# 		print(url)
+# 		storage = FileSystemStorage(location=url)
 		
-		image = base64.b64decode(imageString)
+# 		image = base64.b64decode(imageString)
 
-		with storage.open('', 'wb+') as destination:
+# 		with storage.open('', 'wb+') as destination:
 			
->>>>>>> origin/viral-dev
-			destination.write(image)
-			destination.close()
-		return url
-	except Exception as e:
-		print("exception: " + str(e))
-		# workaround for an issue I found
-		if str(e) == INCORRECT_PADDING_EXCEPTION:
-			imageString += "=" * ((4 - len(imageString) % 4) % 4)
-			return save_temp_profile_image_from_base64String(imageString, user)
-	return None
+# 			destination.write(image)
+# 			destination.close()
+# 			# url
+# 	except Exception as e:
+# 		print("exception: " + str(e))
+# 		# workaround for an issue I found
+# 		if str(e) == INCORRECT_PADDING_EXCEPTION:
+# 			imageString += "=" * ((4 - len(imageString) % 4) % 4)
+# 			return save_temp_profile_image_from_base64String(imageString, user)
+# 	return None
 
-def crop_image(request, *args, **kwargs):
-	payload = {}
-	user = request.user
-<<<<<<< HEAD
-	if request.POST and user.is_authenticated:
-		try:
-			imageString = request.POST.get("image")
-			url = save_temp_profile_image_from_base64String(imageString, user)
-			img = cv2.imread(url)
+# def crop_image(request, *args, **kwargs):
+# 	payload = 
+# 	user = request.user
 
-=======
+# 	if request.POST and user.is_authenticated:
+# 		try:
+# 			imageString = request.POST.get("image")
+# 			url = save_temp_profile_image_from_base64String(imageString, user)
+# 			img = cv2.imread(url)
+
+# =======
 	
-	if request.POST and user.is_authenticated:
+# 	if request.POST and user.is_authenticated:
 		
-		try:
-			imageString = request.POST.get("image")
-			url = save_temp_profile_image_from_base64String(imageString, user)
+# 		try:
+# 			imageString = request.POST.get("image")
+# 			url = save_temp_profile_image_from_base64String(imageString, user)
 			
-			img = cv2.imread(url)
+# 			img = cv2.imread(url)
 
 		
->>>>>>> origin/viral-dev
-			cropX = int(float(str(request.POST.get("cropX"))))
-			cropY = int(float(str(request.POST.get("cropY"))))
-			cropWidth = int(float(str(request.POST.get("cropWidth"))))
-			cropHeight = int(float(str(request.POST.get("cropHeight"))))
-<<<<<<< HEAD
-=======
+# 			cropX = int(float(str(request.POST.get("cropX"))))
+# 			cropY = int(float(str(request.POST.get("cropY"))))
+# 	cropWidth = int(float(str(request.POST.get("cropWidth"))))
+# 			cropHeight = int(float(str(request.POST.get("cropHeight"))))
+
+# =======
    
->>>>>>> origin/viral-dev
-			if cropX < 0:
-				cropX = 0
-			if cropY < 0: # There is a bug with cropperjs. y can be negative.
-				cropY = 0
-<<<<<<< HEAD
-			crop_img = img[cropY:cropY+cropHeight, cropX:cropX+cropWidth]
+# 			if cropX < 0:
+# 				cropX = 0
+# 		if cropY < 0: # There is a bug with cropperjs. y can be negative.
+# 				cropY = 0
 
-			cv2.imwrite(url, crop_img)
+# 			crop_img  img[cropY:cropY+cropHeight, cropX:cropX+cropWidth]
 
-			# delete the old image
-			user.profile_image.delet
-			# Save the cropped image to user model
-			user.profile_image.save("profile_image.png", files.File(open(url, 'rb')))
-			user.save()
+# 			cv2.imwrite(url, crop_img)
 
-			payload['result'] = "success"
-			payload['cropped_profile_image'] = user.profile_image.url
-=======
+# 			# delete the old image
+# 			user.profile_image.delet
+# 			# Save the cropped image to user model
+# 			user..save("profile_image.png", files.File(open(url, 'rb')))
+# 			user.save()
+
+# 			payload['result'] = "success"
+# 			payload['cropped_profile_image'] = user.profile_image.url
+# =======
     
-			crop_img = img[cropY:cropY+cropHeight, cropX:cropX+cropWidth]
-			cv2.imwrite(url, crop_img)
-			print("abcd")
+# 			crop_img = img[cropY:cropY+cropHeight, cropX:cropX+cropWidth]
+# 			cv2.imwrite(url, crop_img)
+# 			print("abcd")
 
-			# delete the old image
-			# check this first for profile picture related error
-			# if user.profile_pic:
-			user.profile_pic.delete()
+# 			# delete the old image
+# 			# check this first for profile picture related error
+# 			# if user.profile_pic:
+# 			user.profile_pic.delete()
 
-			# Save the cropped image to user model
-			print("before")
-			user.profile_pic.save("profile_pic.png", files.File(open(url, 'rb')))
-			print("after")
-			user.save()
-			print("check this ->")
-			payload['result'] = "success"
-			payload['cropped_profile_image'] = user.profile_pic.url
->>>>>>> origin/viral-dev
+# 			# Save the cropped image to user model
+# 			print("before")
+# 			user.profile_pic.save("profile_pic.png", files.File(open(url, 'rb')))
+# 			print("after")
+# 			user.save()
+# 			print("check this ->")
+# 			payload['result'] = "success"
+# 			payload['cropped_profile_image'] = user.profile_pic.url
 
-			# delete temp file
-			os.remove(url)
-			
-		except Exception as e:
-			print("exception: " + str(e))
-			payload['result'] = "error"
-			payload['exception'] = str(e)
-<<<<<<< HEAD
-	return HttpResponse(json.dumps(payload), content_type="application/json")
+# 			# delete temp file
+# 			os.remove(url)				
+# 		except Exception as e:
+# 			print("exception: " + str(e))
+# 			payload['result'] = "error"
+# 			payload['exception'] = str(e)
+
+# 	return HttpResponse(json.dumps(payload), content_type="application/json")
 
 
 class AddManagerView(View):
 
     def get(self,request):
-        form = AddManagerForm()(request.POST or None)
-        return render(request, "core/add-manager.html", {"form": form })
+    	form = AddManagerForm()(request.POST or None)
+    	return render(request, "core/add-manager.html", {"form": form })
 
     def post(self, request):
         msg     = None
@@ -236,7 +229,4 @@ class AddManagerView(View):
 
         # return render(request, "accounts/register.html", {"form": form, "msg" : msg, "success" : success })
         return render(request,'core/add-manager.html', {"form": form, "msg" : msg, "success" : success , "context": context})
-=======
-   
-	return HttpResponse(json.dumps(payload), content_type="application/json")
->>>>>>> origin/viral-dev
+   		HttpResponse(json.dumps(payload), content_type="application/json")
