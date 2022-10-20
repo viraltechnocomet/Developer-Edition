@@ -22,7 +22,7 @@ class CustomUser(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    profile_pic=models.ImageField(max_length=225, upload_to='profile_pic', null=True, blank=True)
+    
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
