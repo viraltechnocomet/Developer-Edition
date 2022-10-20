@@ -20,7 +20,7 @@ from django.shortcuts import (
 from core.forms import CreateUserCustomForm, AddManagerForm
 from accounts.models import CustomUser
 from django.conf import settings
-from core.forms import AddManagerForm
+from core.forms import AddManagerForm,AddAgentForm
 import os
 import cv2
 import json
@@ -46,6 +46,11 @@ def AddManager(request):
     context={}
     context['form'] = AddManagerForm
     return render(request,'core/add-manager.html',context)
+
+def AddAgent(request):
+    context={}
+    context['form'] = AddAgentForm
+    return render(request,'core/add-agent.html',context)
 
 # def AddManager(request, args, *kwargs):
 # 	if not request.user.is_authenticated:

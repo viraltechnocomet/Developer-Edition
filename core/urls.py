@@ -12,6 +12,8 @@ urlpatterns = [
     # path('', views.DashboardView.as_view(), name='index'),
     path('dashboard/', views.DashboardView.as_view(),name='dashboard'),
     path('add-manager/', views.AddManager,name='add-manager'),
+    path('add-agent/', views.AddAgent,name='add-agent'),
+    
     path('cropimage/', crop_image,name='cropimage'),
     
 ]

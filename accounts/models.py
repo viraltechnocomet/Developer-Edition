@@ -12,18 +12,18 @@ from .managers import CustomUserManager
 USER_TYPES=[
     ('ADMIN', 'admin'),
     ('MANAGER', 'manager'),
-    ('AGENT', 'agent')
+    ('AGENT', 'agent'),
+    ('CLIENT', 'client'),
 ]
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=50,null=True,blank=True)
-    
     type = models.CharField(max_length=10,choices=USER_TYPES,null=True,blank=True)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
-    profile_pic=models.ImageField(max_length=225, upload_to='profile_pic', null=True, blank=True)
+    # profile_pic=models.ImageField(max_length=225, upload_to='profile_pic', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

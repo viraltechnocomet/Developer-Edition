@@ -102,6 +102,58 @@ class AddManagerForm(ModelForm):
             ),
             
         }
+        
+class AddAgentForm(ModelForm):
+    class Meta:
+        model = User
+
+        fields = "__all__"
+
+        widgets = {
+            'type':forms.HiddenInput(),
+            
+            'first_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"First Name",
+                    'type':"text",
+                }
+            ),
+            'last_name':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Last Name",
+                    'type':"text",
+                }
+            ),
+           'username':forms.TextInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"username",
+                    'type':"text",
+                }
+            ),
+            'email':forms.EmailInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"E-Mail",
+                    'type':"text",
+                }
+            ),
+            'password':forms.PasswordInput(
+                attrs={
+                    'required' : True,
+                    'class':'form-control',
+                    'placeholder':"Password",
+                    'type':"password",
+                }
+            ),
+            
+        }
 
 # class AccountManagerForm(forms.ModelForm):
 
