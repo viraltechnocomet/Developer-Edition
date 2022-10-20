@@ -29,6 +29,9 @@ from django.core import files
 from django.core.files.storage import default_storage
 from django.core.files.storage import FileSystemStorage
 
+from templates import *
+from django.contrib import messages
+from accounts.models import USER_TYPES
 
 TEMP_PROFILE_IMAGE_NAME = "temp_profile_image.png"
 
@@ -42,191 +45,89 @@ class DashboardView(View):
     def post(self, request, *args, **kwargs):
         ...
         
-def AddManager(request):
-    context={}
-    context['form'] = AddManagerForm
-    return render(request,'core/add-manager.html',context)
-
-
-# def AddManager(request, args, *kwargs):
-# 	if not request.user.is_authenticated:
-# 		return redirect("login")
-# 	user_id = kwargs.get("user_id")
-# 	account = CustomUser.objects.get(pk=user_id)
-# 	if account.pk != request.user.pk:
-# 		return HTTPResponse("You cannot edit someone elses profile.")
-# 	context = {}
-# 	if request.POST:
-# 		form = AddManagerForm(request.POST, request.FILES, instance=request.user)
-# 		if form.is_valid():
-# 			form.save()
-# 			return redirect("core:view", user_id=account.pk)
-# 		else:
-# 			form = AddManagerForm(request.POST, instance=request.user,
-# 				initial={
-# 					"id": account.pk,
-# 					"email": account.email, 
-# 					"username": account.username,
-# 					"profile_image": account.profile_image,
-# 				}
-# 			)
-# 			context['form'] = form
-# 	else:
-# 		form = AddManagerForm(
-# 			initial={
-# 					"id": account.pk,
-# 					"email": account.email, 
-# 					"username": account.username,
-# 					"profile_image": account.profile_image,
-# 				}
-# 			)
-# 		context['form'] = form
-# 	context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
-# 	return render(request, "core/add-manager.html", context)
-
-# def save_temp_profile_image_from_base64String(imageString, user):
-# 	INCORRECT_PADDING_EXCEPTION = "Incorrect padding"
-# 	try:
-# 		if not os.path.exists(settings.TEMP):
-# 			os.mkdir(settings.TEMP)
-
-# 		if not os.path.exists(settings.TEMP + "/" + str(user.pk)):
-# 			os.mkdir(settings.TEMP + "/" + str(user.pk))
-# 		url = os.path.join(settings.TEMP + "/" + str(user.pk),TEMP_PROFILE_IMAGE_NAME)
-# 		storage = FileSystemStorage(location=url)
-# 		image = base64.b64decode(imageString)
-# 		with storage.open('', 'wb+') as destination:
-
-# 		if not os.path.exists(os.path.join(settings.TEMP, str(user.pk))):
-# 			os.mkdir(os.path.join(settings.TEMP, str(user.pk)))
-# 		url = os.path.join(settings.TEMP,str(user.pk),TEMP_PROFILE_IMAGE_NAME)
-# 		print(url)
-# 		storage = FileSystemStorage(location=url)
-		
-# 		image = base64.b64decode(imageString)
-
-# 		with storage.open('', 'wb+') as destination:
-			
-# 			destination.write(image)
-# 			destination.close()
-# 			# url
-# 	except Exception as e:
-# 		print("exception: " + str(e))
-# 		# workaround for an issue I found
-# 		if str(e) == INCORRECT_PADDING_EXCEPTION:
-# 			imageString += "=" * ((4 - len(imageString) % 4) % 4)
-# 			return save_temp_profile_image_from_base64String(imageString, user)
-# 	return None
-
-# def crop_image(request, *args, **kwargs):
-# 	payload = 
-# 	user = request.user
-
-# 	if request.POST and user.is_authenticated:
-# 		try:
-# 			imageString = request.POST.get("image")
-# 			url = save_temp_profile_image_from_base64String(imageString, user)
-# 			img = cv2.imread(url)
-
-# =======
-	
-# 	if request.POST and user.is_authenticated:
-		
-# 		try:
-# 			imageString = request.POST.get("image")
-# 			url = save_temp_profile_image_from_base64String(imageString, user)
-			
-# 			img = cv2.imread(url)
-
-		
-# 			cropX = int(float(str(request.POST.get("cropX"))))
-# 			cropY = int(float(str(request.POST.get("cropY"))))
-# 	cropWidth = int(float(str(request.POST.get("cropWidth"))))
-# 			cropHeight = int(float(str(request.POST.get("cropHeight"))))
-
-# =======
-   
-# 			if cropX < 0:
-# 				cropX = 0
-# 		if cropY < 0: # There is a bug with cropperjs. y can be negative.
-# 				cropY = 0
-
-# 			crop_img  img[cropY:cropY+cropHeight, cropX:cropX+cropWidth]
-
-# 			cv2.imwrite(url, crop_img)
-
-# 			# delete the old image
-# 			user.profile_image.delet
-# 			# Save the cropped image to user model
-# 			user..save("profile_image.png", files.File(open(url, 'rb')))
-# 			user.save()
-
-# 			payload['result'] = "success"
-# 			payload['cropped_profile_image'] = user.profile_image.url
-# =======
-    
-# 			crop_img = img[cropY:cropY+cropHeight, cropX:cropX+cropWidth]
-# 			cv2.imwrite(url, crop_img)
-# 			print("abcd")
-
-# 			# delete the old image
-# 			# check this first for profile picture related error
-# 			# if user.profile_pic:
-# 			user.profile_pic.delete()
-
-# 			# Save the cropped image to user model
-# 			print("before")
-# 			user.profile_pic.save("profile_pic.png", files.File(open(url, 'rb')))
-# 			print("after")
-# 			user.save()
-# 			print("check this ->")
-# 			payload['result'] = "success"
-# 			payload['cropped_profile_image'] = user.profile_pic.url
-
-# 			# delete temp file
-# 			os.remove(url)				
-# 		except Exception as e:
-# 			print("exception: " + str(e))
-# 			payload['result'] = "error"
-# 			payload['exception'] = str(e)
-
-# 	return HttpResponse(json.dumps(payload), content_type="application/json")
+# def AddManager(request):
+#     context={}
+#     context['form'] = AddManagerForm
+#     return render(request,'core/add-manager.html',context)
 
 
 class AddManagerView(View):
 
     def get(self,request):
-    	form = AddManagerForm()(request.POST or None)
-    	return render(request, "core/add-manager.html", {"form": form })
+        form = AddManagerForm(request.POST or None)
+        return render(request, "core/add-manager.html", {"form": form })
 
     def post(self, request):
         msg     = None
         success = False
 
         if request.method == "POST":
-            form = AddManagerForm(request.POST, request.FILES)
+            print(request.POST)
+            form = AddManagerForm(request.POST)
+            print(form.errors)
+            # print(form)
             if form.is_valid():
+                # print("It's okkkkkkk......")
                 form.save()
                 # group = Group.objects.get(name='client')
-                username = form.cleaned_data.get("email")
-                raw_password = form.cleaned_data.get("password1")
-                user = authenticate(username=username, password=raw_password)
+                fname=form.cleaned_data.get("first_name")
+                lname=form.cleaned_data.get("last_name")
+                uname = form.cleaned_data.get("username")
+                em = form.cleaned_data.get("email")
+                raw_password = form.cleaned_data.get("password")
+                # user = authenticate(username=uname, password=raw_password)
                 # user.groups.add(group)
 
-                msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully, Please Login!')
+                msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully!')
                 success = True
                 
-                return redirect("/core/dashboard/")
+                return redirect("/core/add-manager/")
 
             else:
-                context['form'] = form
                 msg = ('Form is not valid',)
                 form.add_error(None,'Form is not valid')
         else:
-            context['form'] = form
             form = AddManagerForm()
-            context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
 
-        # return render(request, "accounts/register.html", {"form": form, "msg" : msg, "success" : success })
-        return render(request,'core/add-manager.html', {"form": form, "msg" : msg, "success" : success , "context": context})
-   		HttpResponse(json.dumps(payload), content_type="application/json")
+        return render(request, "core/add-manager.html", {"form": form, "msg" : msg, "success" : success })
+
+# class AddManagerView(View):            
+#     if request.method == 'POST':
+#         form = AddManagerForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             fname = form.cleaned_data.get('first_name')
+#             lname = form.cleaned_data.get('last_name')
+#             uname = form.cleaned_data.get('username')
+#             em = form.cleaned_data.get('email')
+#             pw = form.cleaned_data.get('password')
+#             user = authenticate(username=uname, password=pw)
+#             login(request, user)
+#             return redirect('/core/add-manager/')
+#     else:
+#         form = AddManagerForm()
+#     return render(request, 'add-manager.html', {'form': form})
+
+# class AddManagerView(View): 
+#     def addmanager(request):   
+#         if request.method == 'POST':
+#             form = UserCreationForm(request.POST)
+#             if form.is_valid():
+#                 form.save()
+#                 fname = form.cleaned_data.get('first_name')
+#                 lname = form.cleaned_data.get('last_name')
+#                 uname = form.cleaned_data.get('username')
+#                 em = form.cleaned_data.get('email')
+#                 pw = form.cleaned_data.get('password')
+#                 user = authenticate(username=uname, password=pw)
+#                 login(request, user)
+#                 return HttpResponse("User created successfully!")
+#                 return render(request, 'core/add-manager.html', {'form': form})
+#         else:
+#             form = AddManagerForm()()
+#             return render(request, 'core/add-manager.html', {'form': form})
+
+
+
+    # {% csrf_token %}
+    # {{ form }}

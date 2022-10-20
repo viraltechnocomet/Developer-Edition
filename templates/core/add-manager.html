@@ -134,15 +134,11 @@ Add-Manager
                                                           </div>
                                                         </div>
                                                     </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/viral-dev
 													<div class="mb-2" id="id_image_crop_confirm">
 														<span id="id_cancel" class="material-icons">cancel</span>
 														<span id="id_confirm" class="material-icons">check</span>
 													</div>
-<<<<<<< HEAD
                                     
                                                     <div class="image-container" id="id_image_container">
                                                           <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{form.initial.profile_image.url}}" alt="codingwithmitch logo" >
@@ -151,16 +147,6 @@ Add-Manager
                                                                 
                                                             </div>
                                                       </div>
-=======
-													
-                                                    <div class="image-container" id="id_image_container">
-                                                        <img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image_display" src="{{request.user.profile_pic.url}}" alt="Profile" >
-                                                        <div class="middle" id="id_middle_container">
-                                                            <div class="material-icons" id="id_text">add_circle</div>
-														
-                                                        </div>
-                                                    </div>
->>>>>>> origin/viral-dev
                                                     
                                                 </div>
                                     
@@ -197,6 +183,12 @@ Add-Manager
                                     <div class="mb-3">
                                         {{ form.password }}
                                     </div>
+
+                                    {% comment %} <div>
+                                    <label>User Type</label>
+                                    <div class="mb-3">
+                                        {{form.usertype}}
+                                    </div> {% endcomment %}
                                    
                                     <div class="text-center">
                                         <input type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0"
@@ -213,235 +205,4 @@ Add-Manager
     </main>
 </body>
 
-<script type="text/javascript">
-
-	var cropper;
-	var imageFile;
-	var base64ImageString;
-	var cropX;
-	var cropX;
-	var cropWidth;
-	var cropHeight;
-
-	enableImageOverlay()
-
-	function enableImageOverlay(){
-		var text = document.getElementById("id_text")
-		//text.style.backgroundColor = "#0066ff"
-		text.style.color = "#0066ff"
-		text.style.fontSize = "0px"
-		//text.style.padding = "16px 32px"
-		text.style.cursor = "pointer"
-
-		var profileImage = document.getElementById("id_profile_image")
-		profileImage.style.opacity = "1"
-		profileImage.style.display = "block"
-		profileImage.style.width = "100%"
-		profileImage.style.height = "auto"
-		profileImage.style.transition = ".5s ease"
-		profileImage.style.backfaceVisibility  = "hidden"
-		profileImage.style.cursor = "pointer"
-
-		var middleContainer = document.getElementById("id_middle_container")
-		middleContainer.style.transition = ".5s ease"
-		middleContainer.style.opacity = "0"
-		middleContainer.style.position = "absolute"
-		middleContainer.style.top = "50%"
-		middleContainer.style.left = "50%"
-		middleContainer.style.transform = "translate(-50%, -50%)"
-		middleContainer.style.textAlign = "center"
-
-		var imageContainer = document.getElementById("id_image_container")
-		imageContainer.addEventListener("mouseover", function( event ) { 
-			profileImage.style.opacity = "0.3"
-			middleContainer.style.opacity = "1"
-		})
-
-		imageContainer.addEventListener("mouseout", function( event ) { 
-			profileImage.style.opacity = "1"
-			middleContainer.style.opacity = "0"
-		})
-
-		imageContainer.addEventListener("click", function(event){
-			document.getElementById('id_profile_image').click();
-		});
-
-		var cropConfirm = document.getElementById("id_image_crop_confirm")
-		cropConfirm.classList.remove("d-flex")
-		cropConfirm.classList.remove("flex-row")
-		cropConfirm.classList.remove("justify-content-between")
-		cropConfirm.classList.add("d-none")
-		
-	}
-
-	function disableImageOverlay(){
-		var profileImage = document.getElementById("id_profile_image_display")
-		var middleContainer = document.getElementById("id_middle_container")
-		var imageContainer = document.getElementById("id_image_container")
-		var text = document.getElementById("id_text")
-
-		imageContainer.removeEventListener("mouseover", function( event ) { 
-			profileImage.style.opacity = "0.3"
-			middleContainer.style.opacity = "1"
-		})
-
-		imageContainer.removeEventListener("mouseout", function( event ) { 
-			profileImage.style.opacity = "1"
-			middleContainer.style.opacity = "0"
-		})
-
-		profileImage.style.opacity = "1"
-		middleContainer.style.opacity = "0"
-		text.style.cursor = "move"
-		text.style.opacity = "0"
-
-		document.getElementById('id_image_container').removeEventListener("click", function(event){
-			event.preventDefault();
-			// do nothing
-		});
-		document.getElementById('id_profile_image').addEventListener("click", function(event){
-			event.preventDefault();
-			// do nothing
-		});
-
-		var cropConfirm = document.getElementById("id_image_crop_confirm")
-		cropConfirm.classList.remove("d-none")
-		cropConfirm.classList.add("d-flex")
-		cropConfirm.classList.add("flex-row")
-		cropConfirm.classList.add("justify-content-between")
-
-		var confirm = document.getElementById("id_confirm")
-		confirm.addEventListener("click", function(event){
-			console.log("Sending crop data for processing...")
-			cropImage(
-				imageFile, 
-				cropX, 
-				cropY, 
-				cropWidth,
-				cropHeight
-			)
-		})
-
-		var cancel = document.getElementById("id_cancel")
-		cancel.addEventListener("click", function(event){
-			console.log("Reloading window...")
-			window.location.reload();
-		})
-	}
-
-	/ return null if invalid or base64String if valid /
-	function isImageSizeValid(image){
-		console.log("max size: {{DATA_UPLOAD_MAX_MEMORY_SIZE}}")
-		var startIndex = image.indexOf("base64,") + 7;
-		var base64str = image.substr(startIndex);
-		var decoded = atob(base64str);
-		console.log("FileSize: " + decoded.length);
-		/*
-		if(decoded.length>= "{{DATA_UPLOAD_MAX_MEMORY_SIZE}}"){
-			console.log("image size exceed")
-			return null
-		} */
-		return base64str
-	}
-
-	function cropImage(image, x, y, width, height){
-		base64ImageString = isImageSizeValid(image)
-
-		if(base64ImageString != null){
-			var requestData = {
-				"csrfmiddlewaretoken": "{{ csrf_token }}",
-				"image": base64ImageString,
-				"cropX": cropX,
-				"cropY": cropY,
-				"cropWidth": cropWidth,
-				"cropHeight": cropHeight
-			}
-			displayLoadingSpinner(true)
-<<<<<<< HEAD
-			
-=======
-			$.ajax({
-				type: 'POST',
-				dataType: "json",
-				url: "{% url 'core:cropimage'%}",
-				data: requestData,
-				timeout: 10000,
-				success: function(data) {
-					if(data.result == "success"){
-						document.getElementById("id_cancel").click()
-					}
-					else if(data.result == "error"){
-						alert(data.exception)
-						document.getElementById("id_cancel").click()
-					}
-				},
-				error: function(data) {
-					console.error("ERROR...", data)
-				},
-				complete: function(data){
-					displayLoadingSpinner(false)
-				}
-			});
-		}
-		else{
-			alert("Upload an image smaller than 10 MB");
-			document.getElementById("id_cancel").click()
-		}
->>>>>>> origin/viral-dev
-	}
-
-	/*
-		Called when a new image is selected from file chooser dialog
-	*/
-	function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-            	disableImageOverlay()
-				console.log("readURL")
-            	var image = e.target.result
-            	var imageField = document.getElementById('id_profile_image_display')
-                imageField.src = image
-				cropper = new Cropper(imageField, {
-					aspectRatio: 1/1,
-					crop(event) {
-						//console.log("CROP START")
-						//console.log("x: " + event.detail.x);
-						//console.log("y: " + event.detail.y);
-						//console.log("width: " + event.detail.width);
-						//console.log("height: " + event.detail.height);
-						setImageCropProperties(
-							image,
-							event.detail.x,
-							event.detail.y,
-							event.detail.width,
-							event.detail.height
-						)
-					},
-				});
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    };
-
-    function setImageCropProperties(image, x, y, width, height){
-		imageFile = image
-		cropX = x
-		cropY = y
-		cropWidth = width
-		cropHeight = height
-	}
-
-	function displayLoadingSpinner(isDisplayed){
-		var spinner = document.getElementById("id_loading_spinner")
-		if(isDisplayed){
-			spinner.style.display = "block"
-		}
-		else{
-			spinner.style.display = "none"
-		}
-	}
-
-</script>
-    {% endblock content %}
+{% endblock content %}
