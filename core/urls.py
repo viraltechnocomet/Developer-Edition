@@ -5,12 +5,18 @@ from django.conf.urls.static import static
 from core import views
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
-
-
+from core.views import *
 urlpatterns = [
     # path('', RedirectView.as_view(url=reverse_lazy('accounts:login'))),
     # path('', views.DashboardView.as_view(), name='index'),
     path('dashboard/', views.DashboardView.as_view(),name='dashboard'),
+    # path('cropImage', crop_image, name='crop_image'),
+    path('add-admin/', views.AddAdminView.as_view(),name='add-admin'),
     path('add-manager/', views.AddManagerView.as_view(),name='add-manager'),
+    path('add-agent/', views.AddAgentView.as_view(),name='add-agent'),
+    path('list-all-agent/', views.ShowDataView.as_view(),name='list-all-agent'),
+    path('add-category/', views.AddCategory,name='add-category'),
+    path('add-policy/', views.AddPolicy,name='add-policy'),
+    # path('cropimage/', crop_image,name='cropimage'),
     
 ]

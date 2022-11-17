@@ -28,6 +28,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 import datetime
 from .forms import PasswordRecoveryForm, PasswordResetForm
 from .signals import user_recovers_password
+from accounts.models import CustomUser
 
 
 User = get_user_model()
@@ -53,6 +54,8 @@ class LoginView(View):
                     if not user.is_superuser and not user.is_staff:
                         user.is_staff = True
                         user.save()
+                        
+                   
                     if not (user.is_superuser or user.groups.filter(name='admin').exists()) and user.groups.filter(name='client').exists():
                         # user.groups.add(Group.objects.get(name='client'))
                         user.save()
@@ -67,7 +70,7 @@ class LoginView(View):
                 msg = ('Please fill all the required fields',)
                 form.add_error("email",ValidationError(msg[0]))
                 print("field requires")
-
+    
         return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
 class ForgotPasswordView(View):
@@ -100,6 +103,9 @@ class ForgotPasswordView(View):
                 print("field requires")
 
         return render(request, "accounts/forgot-password.html", {"form": form, "msg" : msg})
+
+
+
 
 class ResetPasswordView(View):
     def get(self,request):
@@ -144,7 +150,7 @@ class RegisterView(View):
                 msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully, Please Login!')
                 success = True
                 
-                return redirect("/core/dashboard/")
+                return redirect("accounts:login")
 
             else:
                 msg = ('Form is not valid',)

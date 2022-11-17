@@ -1,10 +1,10 @@
 {% extends "./base.html" %}
 
 {% block title %}
-    Admin Users
+    All Users
 {% endblock title %}
 
-{% block page-content %}
+{% block content %}
 <!--app-content open-->
 <div class="main-content app-content mt-0">
     <div class="side-app">
@@ -26,11 +26,10 @@
             {% endblock error_messages %}
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Admin Users</h1>
+                <h1 class="page-title">Add New Admin</h1>
                 <div>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Add New Admin User</li>
+                        <li class="breadcrumb-item active" aria-current="page">Add New Admin</li>
                     </ol>
                 </div>
             </div>
@@ -44,7 +43,7 @@
                 <div class="offset-2 col-xl-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Add New Admin User</h3>
+                            <h3 class="card-title">Add New Admin</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -54,6 +53,7 @@
                                         {{form.username}}
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
@@ -77,11 +77,11 @@
                         </div>
                         <div class="card-footer text-end">
                             <input type="submit" value = "Save" class="btn btn-success my-1">
-                            <a href="javascript:void(0)" class="btn btn-danger my-1">Cancel</a>
+                            <a href="/" class="btn btn-danger my-1">Cancel</a>
                         </div>
                     </div>
-                    </form>
                 </div>
+                </form>
             </div>
             <!-- ROW-1 CLOSED -->
         </div>
@@ -90,4 +90,4 @@
     </div>
 </div>
 <!--app-content open-->
-{% endblock page-content %}
+{% endblock content %}

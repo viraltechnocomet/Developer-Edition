@@ -1,0 +1,57 @@
+{% extends "./base.html" %}
+{% load widget_tweaks %}
+{% block title %}
+    All Users
+{% endblock title %}
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Add Category</h1>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Add Category</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <!-- ROW-1 OPEN -->
+            <div class="row">
+                <form class="login100-form validate-form" autocomplete="off"  method="POST">
+                {% csrf_token %}
+                <div class="offset-2 col-xl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Category</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="course_name">Category Name</label>
+                            {% render_field categoryForm.category_name class="form-control" placeholder="Life Insurance" %}
+                      
+                        </div>
+                        <div class="card-footer text-end">
+                            <button type="submit" class="btn btn-primary">ADD</button>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                </form>
+            
+            </div>
+            <!-- ROW-1 CLOSED -->
+        </div>
+        <!--CONTAINER CLOSED -->
+
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--app-content open-->
+{% endblock content %}

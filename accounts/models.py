@@ -15,17 +15,17 @@ USER_TYPES=[
     ('AGENT', 'agent')
 ]
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=20,null=True,blank=True)
+    username = models.CharField(max_length=50,null=True,blank=True)
     type = models.CharField(max_length=10,choices=USER_TYPES,null=True,blank=True)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=timezone.now)
-    
+    date_joined = models.DateTimeField(auto_now_add=True)
+    # profile_pic=models.ImageField(max_length=225, upload_to='profile_pic', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     objects = CustomUserManager()
 
@@ -48,6 +48,7 @@ class CustomUser(AbstractUser):
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         return True
+
 
 
     

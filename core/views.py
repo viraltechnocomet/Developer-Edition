@@ -16,12 +16,18 @@ from django.shortcuts import (
     render, redirect
 )
 
-from core.forms import CreateUserCustomForm, AddManagerForm
-from .forms import AddManagerForm
+from core.forms import *
+from .forms import *
 from django.views.generic import View
 from django.contrib import messages
 from templates import *
 from accounts.models import CustomUser
+from accounts.forms import SignUpForm
+from .models import * 
+from templates import *
+from django.contrib import messages
+from accounts.models import USER_TYPES
+from . import forms
 
 
 
@@ -36,62 +42,113 @@ class DashboardView(View):
         ...
 
 
-# def AddManager(request):
-#     context={}
-#     context['form'] = AddManagerForm
-#     return render(request,'core/add-manager.html',context)
-
-
-class AddManagerView(View):
+class AddAdminView(TemplateView):
     def get(self,request):
-        form = AddManagerForm(request.POST or None)
-        return render(request, "core/add-manager.html", {"form": form })
-
-    def post(self, request):
-        msg     = None
-        success = False
-
-        if request.method == "POST":
-            form = AddManagerForm(request.POST)
-
-            if form.is_valid():
-                form.save()
-                # group = Group.objects.get(name='client')
-                fname = form.cleaned_data.get("first_name")
-                lname = form.cleaned_data.get("last_name")
-                uname = form.cleaned_data.get("username")
-                em = form.cleaned_data.get("email")
-                raw_password = form.cleaned_data.get("password")
-                # user = authenticate(username=username, password=raw_password)
-                # user.groups.add(group)
-
-                msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully, Please Login!')
-                success = True
-                
-                return redirect("/core/add-manager/")
-
-            else:
-                msg = ('Form is not valid',)
-                form.add_error(None,'Form is not valid')
-        else:
-            form = AddManagerForm()
-
-        return render(request, "core/add-manager.html", {"form": form, "msg" : msg, "success" : success })
-
-
-# def AddManager(request):
-#     userForm=forms.AddManagerForm()
-
-#     if request.method=='POST':
-#         userForm=forms.AddManagerForm(request.POST)
+        user = request.user
+        init_data = {"type" : "ADMIN","created_by":user}
+        form = SignUpForm(initial=init_data)
         
-#         if userForm.is_valid():
-#             user=userForm.save()
-#             user.set_password(user.password)
-#             user.save()
-           
-#             my_customer_group = Group.objects.get_or_create(name='CUSTOMER')
-#             my_customer_group[0].user_set.add(user)
-#         return HttpResponseRedirect('add-manager')
-#     return render(request,'core/add-manager.html',)
+        context={
+            'form': form
+        }
+        return render(request, "core/add-admin.html",context)
 
+    def post(self,request):
+        form = SignUpForm(data = request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect(request, "app/dashboard.html")
+            return redirect('core:add-admin')
+        else:
+            messages.error(request, form.errors)
+
+        context={
+            'form': form
+        }
+        return render(request, "core/add-admin.html",context)
+
+class AddManagerView(TemplateView):
+    def get(self,request):
+        user = request.user
+        init_data = {"type" : "MANAGER","created_by":user}
+        form = SignUpForm(initial=init_data)
+        context={
+            'form': form
+        }
+        return render(request, "core/add-manager.html", context)
+
+    def post(self,request):
+        form = SignUpForm(data = request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect(request, "app/dashboard.html")
+            return redirect('core:add-manager')
+        else:
+            messages.error(request, form.errors)
+
+        context={
+            'form': form
+        }
+        return render(request, "core/add-manager.html",context)
+
+
+class AddAgentView(TemplateView):
+    def get(self,request):
+        user = request.user
+        init_data = {"type" : "AGENT","created_by":user}
+        form = SignUpForm(initial=init_data)
+        context={
+            'form': form
+        }
+        return render(request, "core/add-agent.html", context)
+
+    def post(self,request):
+        form = SignUpForm(data = request.POST)
+        if form.is_valid():
+            form.save()
+            # return redirect(request, "app/dashboard.html")
+            return redirect('core:add-agent')
+        else:
+            messages.error(request, form.errors)
+
+        context={
+            'form': form
+        }
+        return render(request, "core/add-agent.html",context)
+
+class ShowDataView(TemplateView):
+
+    def get(self, request):
+        
+        showlist = CustomUser.objects.all()
+        context = {
+            'userdata': showlist
+        }
+        return render(request, "core/list-all-agent.html", context)
+
+
+
+def AddCategory(request):
+    categoryForm=forms.CategoryForm() 
+    if request.method=='POST':
+        categoryForm=forms.CategoryForm(request.POST)
+        if categoryForm.is_valid():
+            categoryForm.save()
+            return redirect('core:add-category')
+    return render(request,'core/add-category.html',{'categoryForm':categoryForm})
+
+
+def AddPolicy(request):
+    policyForm=forms.PolicyForm() 
+    
+    if request.method=='POST':
+        policyForm=forms.PolicyForm(request.POST)
+        if policyForm.is_valid():
+            categoryid = request.POST.get('category')
+            category = Category.objects.get(id=categoryid)
+
+            policy = policyForm.save(commit=False)
+            policy.category=category
+            policy.save()
+            return redirect('core:add-agent')
+    return render(request,'core/add-policy.html',{'policyForm':policyForm})

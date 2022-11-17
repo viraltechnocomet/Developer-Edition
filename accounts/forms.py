@@ -10,6 +10,8 @@ from django.conf import settings
 
 User = get_user_model()
 
+
+
 class LoginForm(forms.Form):
     email = forms.CharField(
         widget=forms.TextInput(
@@ -120,6 +122,7 @@ class SignUpForm(UserCreationForm):
                 'aria-label':"Confirm Password",
             }
         ))
+  
     
     class Meta:
         model = User
