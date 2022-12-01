@@ -39,7 +39,7 @@ class CustomUser(AbstractUser):
             return_str = self.username
         else:
             return_str = self.email
-        return return_str
+        return self.email
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -50,5 +50,6 @@ class CustomUser(AbstractUser):
         return True
 
 
+# class Manager(CustomUser):
 
     

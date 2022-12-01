@@ -3,6 +3,9 @@ from django.forms import ModelForm
 from . import models
 from django.contrib.auth import get_user_model
 from django.contrib.admin import widgets
+from accounts.models import *
+from core.models import *
+
 
 
 User = get_user_model()
@@ -40,30 +43,20 @@ class CreateUserCustomForm(ModelForm):
                 }
             ),
             
-            # 'password2':forms.PasswordInput(
-            #     attrs={
-            #         'required' : True,
-            #         'class':'form-control',
-            #         'placeholder':"Confirm Password",
-            #         'type':"text",
-            #     }
-            # ),
-        }
-
-
-# class CategoryForm(forms.ModelForm):
-#     class Meta:
-#         model=models.Category
-#         fields= "__all__"        
+       }     
 
      
 class CategoryForm(forms.ModelForm):
     class Meta:
-        model=models.Category
+        model=Category
         fields=['category_name']     
 
+
 class PolicyForm(forms.ModelForm):
-    category=forms.ModelChoiceField(queryset=models.Category.objects.all(),empty_label="Category Name", to_field_name="id")
+    # username = forms.CharField(, to_field_name="id")
+    category=forms.ModelChoiceField(queryset=Category.objects.all(),empty_label="Category Name", to_field_name="id")
     class Meta:
-        model=models.Policy
-        fields=['policy_name','sum_assurance','premium','tenure']
+        model=Policy
+        fields=['email','policy_name','sum_assurance','premium','tenure']
+
+

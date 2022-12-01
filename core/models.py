@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 import datetime
 from django.contrib.auth import get_user_model
+from django.conf import settings
+from accounts.models import *
 # from accounts import models
 
 User = get_user_model()
@@ -14,6 +16,7 @@ class Category(models.Model):
 
 
 class Policy(models.Model):
+    email=models.OneToOneField(CustomUser, on_delete=models.CASCADE,null=True,blank=True)
     category= models.ForeignKey('Category', on_delete=models.CASCADE)
     policy_name=models.CharField(max_length=200)
     sum_assurance=models.PositiveIntegerField()

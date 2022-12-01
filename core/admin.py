@@ -5,3 +5,4 @@ from .models import *
 User = get_user_model()
 
 admin.site.register(Category)
+admin.site.register(Policy)

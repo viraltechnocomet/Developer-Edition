@@ -1,0 +1,59 @@
+{% extends "./base.html" %}
+{% load widget_tweaks %}
+{% block title %}
+    All Users
+{% endblock title %}
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Add Policy View</h1>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Add Policy View</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <!-- ROW-1 OPEN -->
+            <table class="table table-hover table-bordered table-striped" id="dev-table">
+                <thead class="thead-dark">
+                  <tr>
+                  <th>Id</th>
+                    <th>Policy Name</th>
+                    <th> Category</th>
+                    <th> Sum Assurance</th>
+                    <th> Premium</th>
+                    <th> Tenure</th>
+                    <th> Creation Date</th>
+                    
+                  </tr>
+                </thead>
+                {% for t in policies %}
+                <tr>
+                  <td> {{ forloop.counter }}</td>
+                  <td> {{t.policy_name}}</td>
+                  <td> {{t.category}}</td>
+                  <td> {{t.sum_assurance}}</td>
+                  <td> {{t.premium}}</td>
+                  <td> {{t.tenure}}</td>
+                  <td>{{t.creation_date}}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            <!-- ROW-1 CLOSED -->
+        </div>
+        <!--CONTAINER CLOSED -->
+
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--app-content open-->
+{% endblock content %}

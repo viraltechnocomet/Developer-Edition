@@ -12,14 +12,14 @@
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
             <!-- PAGE-HEADER -->
-            <div class="page-header">
+            {% comment %} <div class="page-header"> 
                 <h1 class="page-title">Add Policy</h1>
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page">Add Policy</li>
                     </ol>
                 </div>
-            </div>
+            </div> {% endcomment %}
             <!-- PAGE-HEADER END -->
 
             <!-- ROW-1 OPEN -->
@@ -32,6 +32,22 @@
                             <h3 class="card-title">Add Policy</h3>
                         </div>
                         <div class="form-group">
+                        
+                        {% if request.user.is_authenticated  %}
+                            {% if user.type == "MANAGER" %}
+                            <label for="course_name">Managers email</label>
+                            <div class='form-control'>{{request.user.email}}</div>
+                            {% endif %}
+                        {% endif %}
+
+                        {% comment %} {% if user.type == "AGENT" %}
+                            <label for="course_name">Agent email</label>
+                            <div class='form-control'>{{request.user.email}}</div>
+                            
+                        {% endif %} {% endcomment %}
+                            <label for="course_name">Manager</label>
+                            {% render_field policyForm.email class="form-control" placeholder="Life Insurance" %}
+                           
                             <label for="course_name">Category</label>
                             {% render_field policyForm.category class="form-control" placeholder="Life Insurance" %}
                       

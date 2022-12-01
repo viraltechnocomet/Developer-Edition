@@ -9,6 +9,7 @@ from .views import (
     ForgotPasswordView,
     ResetPasswordView,
 
+
     Recover,
     RecoverDone,
     Reset,
@@ -19,6 +20,7 @@ from .views import (
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views #import this
+
 
 app_name = 'accounts'
 
@@ -33,6 +35,8 @@ urlpatterns = [
     path('recover/', Recover.as_view(), name='password_reset_recover'),
     path('reset/done/', ResetDone.as_view(), name='password_reset_done'),
     path(r'reset/(<token>)/', Reset.as_view(), name='password_reset_reset'),
+
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

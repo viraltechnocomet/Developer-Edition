@@ -1,0 +1,38 @@
+{% extends "./base.html" %}
+{% load widget_tweaks %}
+{% block title %}
+    Update user
+{% endblock title %}
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+            <!-- ROW-1 OPEN -->
+            <div class="row">
+                <form method="POST" class='form-control' autocomplete="off" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% comment %} {{form.as_p}} {% endcomment %}
+                    <label for="first_name">Username</label>
+                      {{ form.username }}
+                    <label for="last_name">Email</label>
+                      {{ form.email }}                       
+                    {% comment %} <label for="password">Password</label>
+                        {{ form.password1 }} {% endcomment %}
+                       <br><br><br><br>
+                    <input type="submit" class='btn' value="Update">
+                </form>
+            
+            </div>
+            <!-- ROW-1 CLOSED -->
+        </div>
+        <!--CONTAINER CLOSED -->
+
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--app-content open-->
+{% endblock content %}

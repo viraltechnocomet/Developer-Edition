@@ -16,13 +16,12 @@ from django.shortcuts import (
     render, redirect
 )
 
-from core.forms import *
 from .forms import *
 from django.views.generic import View
 from django.contrib import messages
 from templates import *
 from accounts.models import CustomUser
-from accounts.forms import SignUpForm
+from accounts.forms import SignUpForm, UpdateForm
 from .models import * 
 from templates import *
 from django.contrib import messages
@@ -58,7 +57,7 @@ class AddAdminView(TemplateView):
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
-            return redirect('core:add-admin')
+            return redirect('core:all-user-list')
         else:
             messages.error(request, form.errors)
 
@@ -82,7 +81,7 @@ class AddManagerView(TemplateView):
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
-            return redirect('core:add-manager')
+            return redirect('core:all-user-list')
         else:
             messages.error(request, form.errors)
 
@@ -107,7 +106,7 @@ class AddAgentView(TemplateView):
         if form.is_valid():
             form.save()
             # return redirect(request, "app/dashboard.html")
-            return redirect('core:add-agent')
+            return redirect('core:all-user-list')
         else:
             messages.error(request, form.errors)
 
@@ -124,7 +123,7 @@ class ShowDataView(TemplateView):
         context = {
             'userdata': showlist
         }
-        return render(request, "core/list-all-agent.html", context)
+        return render(request, "core/all-user-list.html", context)
 
 
 
@@ -140,15 +139,51 @@ def AddCategory(request):
 
 def AddPolicy(request):
     policyForm=forms.PolicyForm() 
-    
+   
     if request.method=='POST':
         policyForm=forms.PolicyForm(request.POST)
-        if policyForm.is_valid():
+        if policyForm.is_valid(): 
             categoryid = request.POST.get('category')
             category = Category.objects.get(id=categoryid)
 
+            usernameid = request.POST.get('email')
+            username = CustomUser.objects.get(id=usernameid)
+            print(usernameid)
             policy = policyForm.save(commit=False)
             policy.category=category
+            policy.username=username
             policy.save()
-            return redirect('core:add-agent')
+            return redirect('core:add-policy-view')
     return render(request,'core/add-policy.html',{'policyForm':policyForm})
+
+
+def AddPolicyView(request):
+    policies = Policy.objects.all()
+    return render(request,'core/add-policy-view.html',{'policies':policies})
+
+
+
+def UserUpdateView(request, id):
+    context = {}
+
+    if request.method == "POST":
+        print("hello...")
+        emp = CustomUser.objects.get(id = id)
+        form = UpdateForm(request.POST, instance=emp)
+        if form.is_valid():
+            print("done...")
+            form.save()
+            return redirect('core:all-user-list')
+        context['emp'] = emp
+        context['form'] = form
+    else:
+        emp = CustomUser.objects.get(id=id)
+        form = UpdateForm(instance=emp)
+        context['emp']=emp
+        context['form']=form
+    return render(request, 'core/user-update.html', context)
+
+def UserDeleteView(request,id):
+    emp = CustomUser.objects.get(id = id)
+    emp.delete()
+    return redirect('core:all-user-list')

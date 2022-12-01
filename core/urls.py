@@ -14,9 +14,13 @@ urlpatterns = [
     path('add-admin/', views.AddAdminView.as_view(),name='add-admin'),
     path('add-manager/', views.AddManagerView.as_view(),name='add-manager'),
     path('add-agent/', views.AddAgentView.as_view(),name='add-agent'),
-    path('list-all-agent/', views.ShowDataView.as_view(),name='list-all-agent'),
+    path('all-user-list/', views.ShowDataView.as_view(),name='all-user-list'),
     path('add-category/', views.AddCategory,name='add-category'),
     path('add-policy/', views.AddPolicy,name='add-policy'),
+    path('add-policy-view/', views.AddPolicyView,name='add-policy-view'),
+    path('user-update/<int:id>', views.UserUpdateView,name='user-update'),
+    path('user-delete/<int:id>', views.UserDeleteView,name='user-delete'),
+    
     # path('cropimage/', crop_image,name='cropimage'),
     
 ]

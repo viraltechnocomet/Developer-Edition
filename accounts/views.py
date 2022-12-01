@@ -141,12 +141,11 @@ class RegisterView(View):
             form = SignUpForm(request.POST)
             if form.is_valid():
                 form.save()
-                # group = Group.objects.get(name='client')
+              
                 username = form.cleaned_data.get("email")
                 raw_password = form.cleaned_data.get("password1")
                 user = authenticate(username=username, password=raw_password)
-                # user.groups.add(group)
-
+              
                 msg     = messages.add_message(request, messages.SUCCESS,'User created Successfully, Please Login!')
                 success = True
                 
@@ -314,4 +313,6 @@ class Reset(SaltMixin, generic.FormView):
 
 class ResetDone(generic.TemplateView):
     template_name = 'accounts/recovery_done.html'
+
+
 
